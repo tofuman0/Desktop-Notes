@@ -43,6 +43,8 @@ namespace DesktopNotes
             this.lblY = new System.Windows.Forms.Label();
             this.tbAlpha = new System.Windows.Forms.TextBox();
             this.lblAlpha = new System.Windows.Forms.Label();
+            this.btnColour = new System.Windows.Forms.Button();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.SuspendLayout();
             // 
             // btnSave
@@ -105,9 +107,9 @@ namespace DesktopNotes
             // 
             this.btnFont.Location = new System.Drawing.Point(12, 34);
             this.btnFont.Name = "btnFont";
-            this.btnFont.Size = new System.Drawing.Size(75, 23);
+            this.btnFont.Size = new System.Drawing.Size(85, 23);
             this.btnFont.TabIndex = 6;
-            this.btnFont.Text = "Change";
+            this.btnFont.Text = "Change Font";
             this.btnFont.UseVisualStyleBackColor = true;
             this.btnFont.Click += new System.EventHandler(this.btnFont_Click);
             // 
@@ -162,11 +164,22 @@ namespace DesktopNotes
             this.lblAlpha.TabIndex = 12;
             this.lblAlpha.Text = "Alpha:";
             // 
+            // btnColour
+            // 
+            this.btnColour.Location = new System.Drawing.Point(103, 34);
+            this.btnColour.Name = "btnColour";
+            this.btnColour.Size = new System.Drawing.Size(109, 23);
+            this.btnColour.TabIndex = 13;
+            this.btnColour.Text = "Change Colour";
+            this.btnColour.UseVisualStyleBackColor = true;
+            this.btnColour.Click += new System.EventHandler(this.btnColour_Click);
+            // 
             // SettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(331, 428);
+            this.Controls.Add(this.btnColour);
             this.Controls.Add(this.lblAlpha);
             this.Controls.Add(this.tbAlpha);
             this.Controls.Add(this.lblY);
@@ -203,5 +216,7 @@ namespace DesktopNotes
         private System.Windows.Forms.Label lblY;
         private System.Windows.Forms.TextBox tbAlpha;
         private System.Windows.Forms.Label lblAlpha;
+        private System.Windows.Forms.Button btnColour;
+        private System.Windows.Forms.ColorDialog colorDialog1;
     }
 }

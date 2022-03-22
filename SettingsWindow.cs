@@ -88,8 +88,6 @@ namespace DesktopNotes
             if(fontDialog1.ShowDialog() == DialogResult.OK)
             {
                 font = fontDialog1.Font;
-                fontcolour = fontDialog1.Color;
-                fontcolour = Color.FromArgb(Convert.ToInt32(tbAlpha.Text), fontcolour.R, fontcolour.G, fontcolour.B);
                 DisplayConfig();
             }
         }
@@ -111,7 +109,17 @@ namespace DesktopNotes
 
         private void tbY_TextChanged(object sender, EventArgs e)
         {
-            locationY = Convert.ToUInt32(tbX.Text);
+            locationY = Convert.ToUInt32(tbY.Text);
+        }
+
+        private void btnColour_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                fontcolour = colorDialog1.Color;
+                fontcolour = Color.FromArgb(Convert.ToInt32(tbAlpha.Text), fontcolour.R, fontcolour.G, fontcolour.B);
+                DisplayConfig();
+            }
         }
     }
 }
