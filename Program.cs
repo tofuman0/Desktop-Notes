@@ -16,10 +16,69 @@ namespace DesktopNotes
         [MTAThread]
         static void Main(string[] args)
         {
+            CheckOrCreateConfig();
             DrawDesktop();
             Note note = new Note();
             Application.Run();
             RefreshWallpaper();
+        }
+
+        static private void CheckOrCreateConfig()
+        {
+            try
+            {
+                var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                var settings = configFile.AppSettings.Settings;
+                bool save = false;
+                if (settings["Font"] == null)
+                {
+                    settings.Add("Font", "Arial");
+                    save = true;
+                }
+                if (settings["FontSize"] == null)
+                {
+                    settings.Add("FontSize", "12");
+                    save = true;
+                }
+                if (settings["FontColour"] == null)
+                {
+                    settings.Add("FontColour", "E0FFFFFF");
+                    save = true;
+                }
+                if (settings["FontStyle"] == null)
+                {
+                    settings.Add("FontStyle", "Regular");
+                    save = true;
+                }
+                if (settings["Note"] == null)
+                {
+                    settings.Add("Note", "Desktop Notes:\r\nAdd useful information here!");
+                    save = true;
+                }
+                if (settings["LocationX"] == null)
+                {
+                    settings.Add("LocationX", "100");
+                    save = true;
+                }
+                if (settings["LocationY"] == null)
+                {
+                    settings.Add("LocationY", "100");
+                    save = true;
+                }
+
+                if (save)
+                    configFile.Save();
+            }
+            catch (ConfigurationErrorsException ex)
+            {
+                MessageBox.Show(null, "Error reading/writing app settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        static public void Refresh()
+        {
+            RefreshWallpaper();
+            DrawDesktop();
         }
 
         static public void DrawDesktop()
@@ -90,11 +149,21 @@ namespace DesktopNotes
                     var settings = configFile.AppSettings.Settings;
                     String fontfamily = settings["Font"].Value;
                     Single fontsize = Convert.ToSingle(settings["FontSize"].Value);
+                    FontStyle fontstyle = FontStyle.Regular;
+                    String[] fontstyles = settings["FontStyle"].Value.Split(',');
+                    if (fontstyles.Contains("Bold"))
+                        fontstyle |= FontStyle.Bold;
+                    if (fontstyles.Contains("Italic"))
+                        fontstyle |= FontStyle.Italic;
+                    if (fontstyles.Contains("Underline"))
+                        fontstyle |= FontStyle.Underline;
+                    if (fontstyles.Contains("Strikeout"))
+                        fontstyle |= FontStyle.Strikeout;
                     Int32 fontcolour = Convert.ToInt32(settings["FontColour"].Value, 16);
                     String note = settings["Note"].Value;
                     UInt32 locationx = Convert.ToUInt32(settings["LocationX"].Value);
                     UInt32 locationy = Convert.ToUInt32(settings["LocationY"].Value);
-                    Font font = new Font(fontfamily, fontsize);
+                    Font font = new Font(fontfamily, fontsize, fontstyle);
                     Brush brush = new SolidBrush(Color.FromArgb(fontcolour));
                     Rectangle resolution = Screen.PrimaryScreen.Bounds;
                     g.DrawString(note, font, brush, new PointF(locationx, locationy));

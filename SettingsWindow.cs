@@ -34,7 +34,18 @@ namespace DesktopNotes
                 String fontfamily = settings["Font"].Value;
                 Single fontsize = Convert.ToSingle(settings["FontSize"].Value);
                 fontcolour = Color.FromArgb(Convert.ToInt32(settings["FontColour"].Value, 16));
-                font = new Font(fontfamily, fontsize);
+                FontStyle fontstyle = FontStyle.Regular;
+                String[] fontstyles = settings["FontStyle"].Value.Split(',');
+                if (fontstyles.Contains("Bold"))
+                    fontstyle |= FontStyle.Bold;
+                if (fontstyles.Contains("Italic"))
+                    fontstyle |= FontStyle.Italic;
+                if (fontstyles.Contains("Underline"))
+                    fontstyle |= FontStyle.Underline;
+                if (fontstyles.Contains("Strikeout"))
+                    fontstyle |= FontStyle.Strikeout;
+                font = new Font(fontfamily, fontsize, fontstyle);
+                fontDialog1.Font = font;
                 note = settings["Note"].Value;
                 locationX = Convert.ToUInt32(settings["LocationX"].Value);
                 locationY = Convert.ToUInt32(settings["LocationY"].Value);
@@ -68,6 +79,17 @@ namespace DesktopNotes
                 settings["Font"].Value = font.Name;
                 settings["FontSize"].Value = font.Size.ToString();
                 settings["FontColour"].Value = fontcolour.ToArgb().ToString("X");
+                FontStyle fontstyle = font.Style;
+                String fontstyles = "Regular";
+                if (((Int32)fontstyle & (Int32)FontStyle.Bold) != 0)
+                    fontstyles = "Bold";
+                if (((Int32)fontstyle & (Int32)FontStyle.Italic) != 0)
+                    fontstyles += ",Italic";
+                if (((Int32)fontstyle & (Int32)FontStyle.Underline) != 0)
+                    fontstyles += ",Underline";
+                if (((Int32)fontstyle & (Int32)FontStyle.Strikeout) != 0)
+                    fontstyles += ",Strikeout";
+                settings["FontStyle"].Value = fontstyles;
                 settings["Note"].Value = note;
                 settings["LocationX"].Value = locationX.ToString();
                 settings["LocationY"].Value = locationY.ToString();
@@ -79,6 +101,7 @@ namespace DesktopNotes
             }
             finally
             {
+                Program.Refresh();
                 this.Close();
             }
         }

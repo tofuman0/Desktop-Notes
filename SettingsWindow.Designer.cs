@@ -176,8 +176,7 @@ namespace DesktopNotes
             // 
             // SettingsWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(331, 428);
             this.Controls.Add(this.btnColour);
             this.Controls.Add(this.lblAlpha);
@@ -193,8 +192,15 @@ namespace DesktopNotes
             this.Controls.Add(this.tbNote);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SettingsWindow";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Settings";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
