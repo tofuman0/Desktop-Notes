@@ -8,11 +8,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Collections.Specialized;
+using System.IO;
 
 namespace DesktopNotes
 {
     class Program
     {
+        static private byte[] wallpaperdata;
+
         [MTAThread]
         static void Main(string[] args)
         {
@@ -75,18 +78,35 @@ namespace DesktopNotes
             }
         }
 
-        static public void Refresh()
+        static public void Refresh(bool ifOnChanged = false)
         {
+            if (wallpaperdata == null)
+                wallpaperdata = GetWallpaperData();
+            if(ifOnChanged)
+            {
+                byte[] currentwallpaper = GetWallpaperData();
+                if (wallpaperdata.SequenceEqual(currentwallpaper))
+                    return;
+                wallpaperdata = currentwallpaper;
+            }
             RefreshWallpaper();
+            // Wait some time before drawing
+            Thread.Sleep(1000);
             DrawDesktop();
+        }
+
+        static private byte[] GetWallpaperData()
+        {
+            byte[] currentwallpaperdata = null;
+            StringBuilder s = new StringBuilder(300);
+            // Get Wallpaper
+            if(W32.SystemParametersInfo(0x0073, 300, s, 0) == 1)
+                currentwallpaperdata = File.ReadAllBytes(s.ToString());
+            return currentwallpaperdata;
         }
 
         static public void DrawDesktop()
         {
-            RefreshWallpaper();
-            // Wait some time before drawing again
-            Thread.Sleep(1000);
-
             // Fetch the Progman window
             IntPtr progman = W32.FindWindow("Progman", null);
 
@@ -139,7 +159,7 @@ namespace DesktopNotes
             }
         }
 
-        static private void DrawNotes(IntPtr dc)
+        static public void DrawNotes(IntPtr dc)
         {
             using (Graphics g = Graphics.FromHdc(dc))
             {
