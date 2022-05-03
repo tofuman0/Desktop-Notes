@@ -156,7 +156,6 @@ namespace DesktopNotes
             this.tbAlpha.Size = new System.Drawing.Size(58, 20);
             this.tbAlpha.TabIndex = 11;
             this.tbAlpha.Leave += new System.EventHandler(this.tbAlpha_Leave);
-            this.tbAlpha.Validating += new System.ComponentModel.CancelEventHandler(this.tbAlpha_Validating);
             // 
             // lblAlpha
             // 

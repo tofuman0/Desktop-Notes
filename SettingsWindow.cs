@@ -136,11 +136,6 @@ namespace DesktopNotes
             }
         }
 
-        private void tbAlpha_Validating(object sender, CancelEventArgs e)
-        {
-            tbAlpha.Text = ValidatedIntString(sender.ToString());
-        }
-
         private Int32 ConvertToInt(String inStr)
         {
             try
