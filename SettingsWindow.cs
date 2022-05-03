@@ -120,21 +120,6 @@ namespace DesktopNotes
             note = tbNote.Text;
         }
 
-        private void tbAlpha_TextChanged(object sender, EventArgs e)
-        {
-            fontcolour = Color.FromArgb(Convert.ToInt32(tbAlpha.Text), fontcolour.R, fontcolour.G, fontcolour.B);
-        }
-
-        private void tbX_TextChanged(object sender, EventArgs e)
-        {
-            locationX = Convert.ToUInt32(tbX.Text);
-        }
-
-        private void tbY_TextChanged(object sender, EventArgs e)
-        {
-            locationY = Convert.ToUInt32(tbY.Text);
-        }
-
         private void btnColour_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
@@ -143,6 +128,60 @@ namespace DesktopNotes
                 fontcolour = Color.FromArgb(Convert.ToInt32(tbAlpha.Text), fontcolour.R, fontcolour.G, fontcolour.B);
                 DisplayConfig();
             }
+        }
+
+        private void tbAlpha_Validating(object sender, CancelEventArgs e)
+        {
+            tbAlpha.Text = ValidatedIntString(sender.ToString());
+        }
+
+        private Int32 ConvertToInt(String inStr)
+        {
+            try
+            {
+                return Convert.ToInt32(inStr);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        private UInt32 ConvertToUInt(String inStr)
+        {
+            try
+            {
+                return Convert.ToUInt32(inStr);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        private String ValidatedIntString(String inStr, bool unsigned = false)
+        {
+            if (unsigned == false)
+                return ConvertToInt(inStr).ToString();
+            else
+                return ConvertToUInt(inStr).ToString();
+        }
+
+        private void tbAlpha_Leave(object sender, EventArgs e)
+        {
+            tbAlpha.Text = ValidatedIntString(tbAlpha.Text);
+            fontcolour = Color.FromArgb(Convert.ToInt32(tbAlpha.Text), fontcolour.R, fontcolour.G, fontcolour.B);
+        }
+
+        private void tbX_Leave(object sender, EventArgs e)
+        {
+            locationX = ConvertToUInt(tbX.Text);
+            tbX.Text = locationX.ToString();
+        }
+
+        private void tbY_Leave(object sender, EventArgs e)
+        {
+            locationY = ConvertToUInt(tbY.Text);
+            tbY.Text = locationY.ToString();
         }
     }
 }

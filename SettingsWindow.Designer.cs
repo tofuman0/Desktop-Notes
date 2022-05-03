@@ -119,7 +119,7 @@ namespace DesktopNotes
             this.tbX.Name = "tbX";
             this.tbX.Size = new System.Drawing.Size(124, 20);
             this.tbX.TabIndex = 7;
-            this.tbX.TextChanged += new System.EventHandler(this.tbX_TextChanged);
+            this.tbX.Leave += new System.EventHandler(this.tbX_Leave);
             // 
             // tbY
             // 
@@ -127,7 +127,7 @@ namespace DesktopNotes
             this.tbY.Name = "tbY";
             this.tbY.Size = new System.Drawing.Size(124, 20);
             this.tbY.TabIndex = 8;
-            this.tbY.TextChanged += new System.EventHandler(this.tbY_TextChanged);
+            this.tbY.Leave += new System.EventHandler(this.tbY_Leave);
             // 
             // lblX
             // 
@@ -153,7 +153,8 @@ namespace DesktopNotes
             this.tbAlpha.Name = "tbAlpha";
             this.tbAlpha.Size = new System.Drawing.Size(58, 20);
             this.tbAlpha.TabIndex = 11;
-            this.tbAlpha.TextChanged += new System.EventHandler(this.tbAlpha_TextChanged);
+            this.tbAlpha.Leave += new System.EventHandler(this.tbAlpha_Leave);
+            this.tbAlpha.Validating += new System.ComponentModel.CancelEventHandler(this.tbAlpha_Validating);
             // 
             // lblAlpha
             // 
