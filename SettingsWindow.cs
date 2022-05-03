@@ -47,6 +47,11 @@ namespace DesktopNotes
                 font = new Font(fontfamily, fontsize, fontstyle);
                 fontDialog1.Font = font;
                 note = settings["Note"].Value;
+                String strAlign = settings["StringAlign"].Value;
+                if (strAlign.ToLower() == "left" || strAlign.ToLower() == "center" || strAlign.ToLower() == "right")
+                    cbStrAlign.SelectedItem = strAlign;
+                else
+                    cbStrAlign.SelectedItem = "Left";
                 locationX = Convert.ToUInt32(settings["LocationX"].Value);
                 locationY = Convert.ToUInt32(settings["LocationY"].Value);
             }
@@ -90,6 +95,7 @@ namespace DesktopNotes
                 if (((Int32)fontstyle & (Int32)FontStyle.Strikeout) != 0)
                     fontstyles += ",Strikeout";
                 settings["FontStyle"].Value = fontstyles;
+                settings["StringAlign"].Value = cbStrAlign.Text;
                 settings["Note"].Value = note;
                 settings["LocationX"].Value = locationX.ToString();
                 settings["LocationY"].Value = locationY.ToString();

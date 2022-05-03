@@ -58,6 +58,11 @@ namespace DesktopNotes
                     settings.Add("Note", "Desktop Notes:\r\nAdd useful information here!");
                     save = true;
                 }
+                if (settings["StringAlign"] == null)
+                {
+                    settings.Add("StringAlign", "Left");
+                    save = true;
+                }
                 if (settings["LocationX"] == null)
                 {
                     settings.Add("LocationX", "100");
@@ -66,6 +71,11 @@ namespace DesktopNotes
                 if (settings["LocationY"] == null)
                 {
                     settings.Add("LocationY", "100");
+                    save = true;
+                }
+                if (settings["AutoRefresh"] == null)
+                {
+                    settings.Add("AutoRefresh", "0");
                     save = true;
                 }
 
@@ -184,9 +194,17 @@ namespace DesktopNotes
                     UInt32 locationx = Convert.ToUInt32(settings["LocationX"].Value);
                     UInt32 locationy = Convert.ToUInt32(settings["LocationY"].Value);
                     Font font = new Font(fontfamily, fontsize, fontstyle);
+                    StringAlignment stringAlignment = StringAlignment.Near;
+                    String strAlignment = settings["StringAlign"].Value;
+                    if (strAlignment.ToLower() == "center")
+                        stringAlignment = StringAlignment.Center;
+                    else if (strAlignment.ToLower() == "right")
+                        stringAlignment = StringAlignment.Far;
+                    StringFormat stringFormat = new StringFormat();
+                    stringFormat.Alignment = stringAlignment;
                     Brush brush = new SolidBrush(Color.FromArgb(fontcolour));
                     Rectangle resolution = Screen.PrimaryScreen.Bounds;
-                    g.DrawString(note, font, brush, new PointF(locationx, locationy));
+                    g.DrawString(note, font, brush, new PointF(locationx, locationy), stringFormat);
                 }
                 catch (Exception ex)
                 {

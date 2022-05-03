@@ -45,11 +45,13 @@ namespace DesktopNotes
             this.lblAlpha = new System.Windows.Forms.Label();
             this.btnColour = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.cbStrAlign = new System.Windows.Forms.ComboBox();
+            this.lblAlignment = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(163, 393);
+            this.btnSave.Location = new System.Drawing.Point(163, 399);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 0;
@@ -59,7 +61,7 @@ namespace DesktopNotes
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(244, 393);
+            this.btnCancel.Location = new System.Drawing.Point(244, 399);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -69,17 +71,17 @@ namespace DesktopNotes
             // 
             // tbNote
             // 
-            this.tbNote.Location = new System.Drawing.Point(12, 131);
+            this.tbNote.Location = new System.Drawing.Point(12, 123);
             this.tbNote.Multiline = true;
             this.tbNote.Name = "tbNote";
-            this.tbNote.Size = new System.Drawing.Size(307, 256);
+            this.tbNote.Size = new System.Drawing.Size(307, 270);
             this.tbNote.TabIndex = 2;
             this.tbNote.TextChanged += new System.EventHandler(this.tbNote_TextChanged);
             // 
             // lblNote
             // 
             this.lblNote.AutoSize = true;
-            this.lblNote.Location = new System.Drawing.Point(12, 114);
+            this.lblNote.Location = new System.Drawing.Point(12, 107);
             this.lblNote.Name = "lblNote";
             this.lblNote.Size = new System.Drawing.Size(33, 13);
             this.lblNote.TabIndex = 3;
@@ -97,7 +99,7 @@ namespace DesktopNotes
             // lblLocation
             // 
             this.lblLocation.AutoSize = true;
-            this.lblLocation.Location = new System.Drawing.Point(12, 72);
+            this.lblLocation.Location = new System.Drawing.Point(12, 62);
             this.lblLocation.Name = "lblLocation";
             this.lblLocation.Size = new System.Drawing.Size(51, 13);
             this.lblLocation.TabIndex = 5;
@@ -115,24 +117,24 @@ namespace DesktopNotes
             // 
             // tbX
             // 
-            this.tbX.Location = new System.Drawing.Point(35, 90);
+            this.tbX.Location = new System.Drawing.Point(35, 79);
             this.tbX.Name = "tbX";
-            this.tbX.Size = new System.Drawing.Size(124, 20);
+            this.tbX.Size = new System.Drawing.Size(64, 20);
             this.tbX.TabIndex = 7;
             this.tbX.Leave += new System.EventHandler(this.tbX_Leave);
             // 
             // tbY
             // 
-            this.tbY.Location = new System.Drawing.Point(195, 90);
+            this.tbY.Location = new System.Drawing.Point(125, 79);
             this.tbY.Name = "tbY";
-            this.tbY.Size = new System.Drawing.Size(124, 20);
+            this.tbY.Size = new System.Drawing.Size(64, 20);
             this.tbY.TabIndex = 8;
             this.tbY.Leave += new System.EventHandler(this.tbY_Leave);
             // 
             // lblX
             // 
             this.lblX.AutoSize = true;
-            this.lblX.Location = new System.Drawing.Point(12, 93);
+            this.lblX.Location = new System.Drawing.Point(12, 82);
             this.lblX.Name = "lblX";
             this.lblX.Size = new System.Drawing.Size(17, 13);
             this.lblX.TabIndex = 9;
@@ -141,7 +143,7 @@ namespace DesktopNotes
             // lblY
             // 
             this.lblY.AutoSize = true;
-            this.lblY.Location = new System.Drawing.Point(172, 93);
+            this.lblY.Location = new System.Drawing.Point(102, 82);
             this.lblY.Name = "lblY";
             this.lblY.Size = new System.Drawing.Size(17, 13);
             this.lblY.TabIndex = 10;
@@ -175,10 +177,34 @@ namespace DesktopNotes
             this.btnColour.UseVisualStyleBackColor = true;
             this.btnColour.Click += new System.EventHandler(this.btnColour_Click);
             // 
+            // cbStrAlign
+            // 
+            this.cbStrAlign.FormattingEnabled = true;
+            this.cbStrAlign.Items.AddRange(new object[] {
+            "Left",
+            "Center",
+            "Right"});
+            this.cbStrAlign.Location = new System.Drawing.Point(208, 78);
+            this.cbStrAlign.Name = "cbStrAlign";
+            this.cbStrAlign.Size = new System.Drawing.Size(111, 21);
+            this.cbStrAlign.TabIndex = 14;
+            this.cbStrAlign.Text = "Left";
+            // 
+            // lblAlignment
+            // 
+            this.lblAlignment.AutoSize = true;
+            this.lblAlignment.Location = new System.Drawing.Point(205, 61);
+            this.lblAlignment.Name = "lblAlignment";
+            this.lblAlignment.Size = new System.Drawing.Size(56, 13);
+            this.lblAlignment.TabIndex = 15;
+            this.lblAlignment.Text = "Alignment:";
+            // 
             // SettingsWindow
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(331, 428);
+            this.Controls.Add(this.lblAlignment);
+            this.Controls.Add(this.cbStrAlign);
             this.Controls.Add(this.btnColour);
             this.Controls.Add(this.lblAlpha);
             this.Controls.Add(this.tbAlpha);
@@ -225,5 +251,7 @@ namespace DesktopNotes
         private System.Windows.Forms.Label lblAlpha;
         private System.Windows.Forms.Button btnColour;
         private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.ComboBox cbStrAlign;
+        private System.Windows.Forms.Label lblAlignment;
     }
 }

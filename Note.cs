@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
+using System.Configuration;
 
 namespace DesktopNotes
 {
@@ -17,8 +18,40 @@ namespace DesktopNotes
         {
             SetStyle(System.Windows.Forms.ControlStyles.SupportsTransparentBackColor, true);
             InitializeComponent();
+            GetConfig();
             BackColor = Color.Transparent;
             notifyIcon1.Visible = true;
+        }
+
+        private void GetConfig()
+        {
+            try
+            {
+                var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                var settings = configFile.AppSettings.Settings;
+                if (Convert.ToInt32(settings["AutoRefresh"].Value) == 1)
+                    autoRefreshToolStripMenuItem.Checked = true;
+
+            }
+            catch (ConfigurationErrorsException ex)
+            {
+                MessageBox.Show(null, "Error reading app settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SaveConfig()
+        {
+            try
+            {
+                var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                var settings = configFile.AppSettings.Settings;
+                settings["AutoRefresh"].Value = autoRefreshToolStripMenuItem.Checked ? "1" : "0";
+                configFile.Save();
+            }
+            catch (ConfigurationErrorsException ex)
+            {
+                MessageBox.Show(null, "Error writing app settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -48,6 +81,7 @@ namespace DesktopNotes
                 trd.IsBackground = true;
                 trd.Start();
             }
+            SaveConfig();
         }
 
         private void ThreadTask()

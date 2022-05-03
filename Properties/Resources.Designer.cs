@@ -63,9 +63,9 @@ namespace DesktopNotes.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon OneDrive {
+        internal static System.Drawing.Icon DesktopNotes {
             get {
-                object obj = ResourceManager.GetObject("OneDrive", resourceCulture);
+                object obj = ResourceManager.GetObject("DesktopNotes", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
