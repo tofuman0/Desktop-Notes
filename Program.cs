@@ -103,6 +103,12 @@ namespace DesktopNotes
             // Wait some time before drawing
             Thread.Sleep(1000);
             DrawDesktop();
+
+        }
+
+        static private void SetDesktopShadow(bool enable)
+        {
+            W32.SystemParametersInfo(0x1041, 0, enable, 0x3);
         }
 
         static private byte[] GetWallpaperData()
@@ -161,6 +167,7 @@ namespace DesktopNotes
             IntPtr dc = W32.GetDCEx(workerw, IntPtr.Zero, (W32.DeviceContextValues)0x403);
             if (dc != IntPtr.Zero)
             {
+                SetDesktopShadow(false);
                 // Create a Graphics instance from the Device Context
                 DrawNotes(dc);
 
@@ -175,6 +182,8 @@ namespace DesktopNotes
             {
                 try
                 {
+                    g.TranslateClip(2, 2);
+
                     var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                     var settings = configFile.AppSettings.Settings;
                     String fontfamily = settings["Font"].Value;
@@ -223,41 +232,6 @@ namespace DesktopNotes
                 // Set Wallpaper
                 W32.SystemParametersInfo(0x0014, 0, s, 0x2);
             }
-        }
-
-        static void PrintVisibleWindowHandles(IntPtr hwnd, int maxLevel=-1, int level=0)
-        {
-            bool isVisible = W32.IsWindowVisible(hwnd);
-
-            if (isVisible && (maxLevel==-1||level<=maxLevel))
-            {
-                StringBuilder className = new StringBuilder(256);
-                W32.GetClassName(hwnd, className, className.Capacity);
-
-                StringBuilder windowTitle = new StringBuilder(256);
-                W32.GetWindowText(hwnd, windowTitle, className.Capacity);
-
-                Console.WriteLine("".PadLeft(level*2)+"0x{0:X8} \"{1}\" {2}", hwnd.ToInt64(), windowTitle, className);
-
-                level++;
-
-                // Enumerates all child windows of the current window
-                W32.EnumChildWindows(hwnd, new W32.EnumWindowsProc((childhandle, childparamhandle) =>
-                {
-                    PrintVisibleWindowHandles(childhandle, maxLevel, level);
-                    return true;
-                }), IntPtr.Zero);
-            }            
-        }
-        static void PrintVisibleWindowHandles(int maxLevel=-1)
-        {
-            // Enumerates all existing top window handles. This includes open and visible windows, as well as invisible windows.
-            W32.EnumWindows(new W32.EnumWindowsProc((tophandle, topparamhandle) =>
-            {
-                PrintVisibleWindowHandles(tophandle, maxLevel);
-                return true;
-            }), IntPtr.Zero);
-        }
-               
+        }               
     }
 }

@@ -596,6 +596,10 @@ namespace DesktopNotes
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern Int32 SystemParametersInfo(UInt32 action, UInt32 uParam, StringBuilder vParam, UInt32 winIni);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SystemParametersInfo(UInt32 action, UInt32 uParam, bool vParam, UInt32 winIni);
+
         [StructLayout(LayoutKind.Sequential)]
         public struct BbStruct //Blur Behind Structure
         {
